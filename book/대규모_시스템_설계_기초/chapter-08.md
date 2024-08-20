@@ -31,11 +31,11 @@
 
 ### URL 리디렉션
 
-![img.png](img.png)
+![./assets/08_img.png](./assets/08_img.png)
 
 단축 URL 을 받은 서버는 그 URL 을 원래 URL로 바꿔서 301 응답의 Location 헤더에 넣어 반환한다.
 
-![img_1.png](img_1.png)
+![./assets/08_img_1.png](./assets/08_img_1.png)
 
 301 과 302 응답은 차이가 있다.
 
@@ -55,7 +55,7 @@
 
 단축 URL 이 www.tinyurl.com/{hashValue} 같은 형태라고 하면 긴 URL을 이 해시 값으로 대응시킬 해시 함수 fx를 찾는 일이 될 것이다.
 
-![img_2.png](img_2.png)
+![./assets/08_img_2.png](./assets/08_img_2.png)
 
 이 해시 함수는 다음 요구사항을 만족해야 한다.
 
@@ -71,7 +71,7 @@
 메모리는 유한하고 비싸기 때문에 다른 저장소를 사용해야 한다.
 더 나은 방법은 <단축 URL, 원래 URL> 의 순서쌍을 관계형 데이터베이스에 저장하는 것이다.
 
-![img_3.png](img_3.png)
+![./assets/08_img_3.png](./assets/08_img_3.png)
 
 ### 해시 함수
 
@@ -84,7 +84,7 @@ hashValue 는 [0-9, a-z, A-Z] 의 문자들로 구성된다.
 hashValue 의 길이를 정하기 위해서는 3650억인 n의 최솟값을 찾아야 한다.
 개략적으로 계산했던 추정치에 따르면 이 시스템은 3650억 개의 URL을 만들어 낼 수 있어야 한다.
 
-![img_4.png](img_4.png)
+![./assets/08_img_4.png](./assets/08_img_4.png)
 
 n = 7 이면 3.5 조 개의 URL을 만들 수 있다.
 
@@ -97,14 +97,14 @@ n = 7 이면 3.5 조 개의 URL을 만들 수 있다.
 
 https://en.wikipedia.org/wiki/Systems_design 을 축한한 결과
 
-![img_5.png](img_5.png)
+![./assets/08_img_5.png](./assets/08_img_5.png)
 
 CRC 32가 계산한 가장 짧은 해시값조차도 7보다는 길다.
 이 문제를 해결할 첫 번째 방법은 해시된 값에서 처음 7개 글자만 이용하는 것이다.
 하지만 이렇게 하면 해시 결과가 서로 충돌할 확률이 높아진다.
 충돌이 실제로 발생했을 때는 충돌이 해소될 때까지 사전에 정한 문자열을 해시값에 덧붙인다.
 
-![img_6.png](img_6.png)
+![./assets/08_img_6.png](./assets/08_img_6.png)
 
 이 방법을 쓰면 충돌을 해소할 수 있지만 단축 URL을 생성할 때 한 번 이상 데이터베이스 질의를 해야 하므로 오버헤드가 크다.
 데이터베이스 대신 블룸 필터를 사용하면 성능을 높일 수 있다.
@@ -122,14 +122,14 @@ CRC 32가 계산한 가장 짧은 해시값조차도 7보다는 길다.
 
 URL 단축기는 시스템의 핵심 컴포넌트이므로 그 처리 흐름이 논리적으로 단순해야 하고 기능적으로는 언제나 동작하는 상태로 유지되어야 한다.
 
-![img_7.png](img_7.png)
+![./assets/08_img_7.png](./assets/08_img_7.png)
 
 이 생성기의 주된 용도는 단축 URL을 만들 때 사용할 ID를 만드는 것이고 이 ID는 전역적 유일성이 보장되는 것이어야 한다.
 여기에 분산 ID 를 사용해야 한다.
 
 ## URL 리디렉션 상세 설계
 
-![img_8.png](img_8.png)
+![./assets/08_img_8.png](./assets/08_img_8.png)
 
 동작 흐름
 
